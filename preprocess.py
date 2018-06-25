@@ -35,10 +35,16 @@ with open(out_file, mode='w') as vw_data:
         line = data_in.readlines(1)[0]
         #putting tags
         tags_ = regex_tags.search(line).group(1).split()
-        tag = [sample_tag for sample_tag in tags_ if sample_tag in label_tags]
-        if len(tag) != 1: 
+        if len(tags_) != 1:
             corrupt_lines+=1 
             continue
+        if tags_ not in label_tags:
+            corrupt_lines+=1 
+            continue
+        #tag = [sample_tag for sample_tag in tags_ if sample_tag in label_tags]
+        '''if len(tag) != 1: 
+            corrupt_lines+=1 
+            continue'''
         #converting to string
         #cleaning from spec charaacters
         line = regex_special_char.sub('', line)
